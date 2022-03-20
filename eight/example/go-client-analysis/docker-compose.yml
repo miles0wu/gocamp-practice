@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  server:
+    image: redis:6.2.6-alpine
+    restart: always
+  client:
+    build:
+      context: .
+    volumes:
+      - ./reports:/reports
+    command: ["redis-analysis", "-host=server", "-port=6379", "-bytes=${SIZE}", "-times=${TIMES}"]
+    depends_on:
+      - server

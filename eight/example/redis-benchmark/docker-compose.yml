@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  server:
+    image: redis:6.2.6-alpine
+
+  client:
+    image: redis:6.2.6-alpine
+    command: ["redis-benchmark", "-h", "server", "-d", "${SIZE}", "-t", "get,set"]
+    depends_on:
+      - server
